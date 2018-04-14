@@ -1,29 +1,40 @@
 <template>
-  <div>
-    <el-button type='primary' @click='loginIn'>登录</el-button>
-    <div class="flex">
-      <div class="item">1</div>
-      <div class="item">1</div>
-      <div class="item">1</div>
-      <div class="item">1</div>
-      <div class="item">1</div>
-      <div class="item">1</div>
-      <div class="item">1</div>
+  <div class="login-wrapper">
+    <el-input type="text" placeholder="请输入用户名" v-model="username" clearable>
+      <template slot="prepend">用户名</template>
+    </el-input>
+    <br>
+    <el-input type="password" placeholder="请输入密码" v-model="password" clearable>
+      <template slot="prepend">密▲码</template>
+    </el-input>
+    <br>
+    <el-button type='primary' @click='loginIn' size='medium'>登录</el-button>
+    <div>
+      <p>username:admin password:any</p>
+      <p>username:editor password:any</p>
     </div>
   </div>
 </template>
 
 <script>
-import { loginByUsername } from '@/api/login'
-
 export default {
   name: 'login',
+  data () {
+    return {
+      username: 'admin',
+      password: '123456'
+    }
+  },
   methods: {
     loginIn () {
-      loginByUsername('admin', '1').then((res) => {
-        localStorage.token = 'token1'
-        localStorage.userInfo = JSON.stringify(res.data)
+      let fromData = {
+        username: this.username,
+        password: this.password
+      }
+      this.$store.dispatch('LoginIn', fromData).then(() => {
         this.$router.push({ path: '/' })
+      }).catch((err) => {
+        console.log(err)
       })
     }
   }
@@ -31,17 +42,15 @@ export default {
 </script>
 
 <style scoped>
-.flex {
+.login-wrapper {
+  position: fixed;
+  width: 520px;
   display: flex;
-  flex-wrap: wrap;
-}
-.item {
-  flex: 0 0 20%;
-  width: 20%;
-  height: 0;
-  padding-bottom: 20%;
-  margin: 2.5%;
-  background: red;
-  box-sizing: border-box;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+  flex-direction: column;
 }
 </style>

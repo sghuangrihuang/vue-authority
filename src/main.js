@@ -5,6 +5,7 @@ import App from './App'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import router from './router'
+import store from './store'
 import './assets/css/font-awesome.css'
 import './mock'
 import Element from 'element-ui'
@@ -20,6 +21,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

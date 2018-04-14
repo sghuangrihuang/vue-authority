@@ -27,9 +27,12 @@ export default {
   },
   methods: {
     Sign () {
-      localStorage.token = ''
-      localStorage.userInfo = ''
-      this.$router.push('/login')
+      this.$store.dispatch('LoginOut').then(() => {
+        this.$store.dispatch('ClearRoutes')
+        this.$router.push('/login')
+      }).catch((err) => {
+        console.log(err)
+      })
     }
   },
   components: {
